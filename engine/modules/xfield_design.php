@@ -19,9 +19,11 @@ skype: gameerblog
  * Что может:
  * - Оформлять доп поля ╰(▔∀▔)╯
  * 
- * Использование:
+ * Установка:
  * Залить файлы по папках
  * В addnews.tpl вместо {xfields} вставить: {include file="engine/modules/xfield_design.php"}
+ *
+ * Как использовать модуль читайте здесь : http://igameer.ru/port/54-xfield_design.html
 */
 
 if( ! defined( 'DATALIFEENGINE' ) )	die( "You are a fucking faggot!" );
