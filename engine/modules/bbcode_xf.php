@@ -1,60 +1,59 @@
 <?PHP
 /*
 =====================================================
- DataLife Engine - by SoftNews Media Group 
+DataLife Engine - by SoftNews Media Group
 -----------------------------------------------------
- http://dle-news.ru/
+http://dle-news.ru/
 -----------------------------------------------------
- Copyright (c) 2004,2015 SoftNews Media Group
+Copyright (c) 2004,2015 SoftNews Media Group
 =====================================================
- Данный код защищен авторскими правами
+Данный код защищен авторскими правами
 =====================================================
- Файл: bbcode.php
+Файл: bbcode.php
 -----------------------------------------------------
- Назначение: подключение основных компонентов
+Назначение: подключение основных компонентов
 =====================================================
-*/
+ */ 
 
-if(!defined('DATALIFEENGINE'))
-{
-  die("Hacking attempt!");
+if (!defined('DATALIFEENGINE')) {
+    die("Hacking attempt!");
 }
 
-$i = 0;
+$i      = 0;
 $output = "<table cellpadding=\"0\" cellspacing=\"0\" border=\"0\" width=\"100%\"><tr>";
 
-$smilies = explode(",", $config['smilies']);
+$smilies       = explode(",", $config['smilies']);
 $count_smilies = count($smilies);
 
-foreach($smilies as $smile)
-{
-   $i++; $smile = trim($smile);
+foreach ($smilies as $smile) {
+    $i++;
+    $smile = trim($smile);
 
-   $output .= "<td style=\"padding:2px;\" align=\"center\"><a href=\"#\" onclick=\"dle_smiley(':$smile:'); return false;\"><img style=\"border: none;\" alt=\"$smile\" src=\"".$config['http_home_url']."engine/data/emoticons/$smile.gif\" /></a></td>";
+    $output .= "<td style=\"padding:2px;\" align=\"center\"><a href=\"#\" onclick=\"dle_smiley(':$smile:'); return false;\"><img style=\"border: none;\" alt=\"$smile\" src=\"" . $config['http_home_url'] . "engine/data/emoticons/$smile.gif\" /></a></td>";
 
-    if ($i%4 == 0 AND $i < $count_smilies) $output .= "</tr><tr>";
+    if ($i % 4 == 0 and $i < $count_smilies) {
+        $output .= "</tr><tr>";
+    }
 
 }
 
 $output .= "</tr></table>";
 
-if (isset($addtype) AND $addtype == "addnews") {
+if (isset($addtype) and $addtype == "addnews") {
 
-	$js_array[] = "engine/classes/js/bbcodes.js";
+    $js_array[] = "engine/classes/js/bbcodes.js";
 
-   $startform = "short_story"; 
-   $addform = "document.entryform";
+    $startform = "short_story";
+    $addform   = "document.entryform";
 
-   $add_id = (isset($_REQUEST['id'])) ? intval($_REQUEST['id']) : '';
-   $p_name = urlencode($member_id['name']);
+    $add_id = (isset($_REQUEST['id'])) ? intval($_REQUEST['id']) : '';
+    $p_name = urlencode($member_id['name']);
 
-   if ($is_logged AND ($user_group[$member_id['user_group']]['allow_image_upload'] OR $user_group[$member_id['user_group']]['allow_file_upload']) )
-   {
-      $image_upload = "<b id=\"b_up\" class=\"bb-btn\" onclick=\"dle_image_upload( '{$p_name}', '{$add_id}' ); return false;\" title=\"{$lang['bb_t_up']}\"></b>";
-   } 
-   else {$image_upload = "";}
+    if ($is_logged and ($user_group[$member_id['user_group']]['allow_image_upload'] or $user_group[$member_id['user_group']]['allow_file_upload'])) {
+        $image_upload          = "<b id=\"b_up\" class=\"bb-btn\" onclick=\"dle_image_upload( '{$p_name}', '{$add_id}' ); return false;\" title=\"{$lang['bb_t_up']}\"></b>";
+    } else { $image_upload = "";}
 
-$code = <<<HTML
+    $code = <<<HTML
 <div class="bb-pane" onmouseenter="if(is_ie9) get_sel(eval('fombj.'+ selField));">
 <b id="b_b" class="bb-btn" onclick="simpletag('b')" title="{$lang['bb_t_b']}"></b>
 <b id="b_i" class="bb-btn" onclick="simpletag('i')" title="{$lang['bb_t_i']}"></b>
@@ -101,12 +100,10 @@ $code = <<<HTML
 <div id="dle_emos" style="display: none;" title="{$lang['bb_t_emo']}"><div style="width:100%;height:100%;overflow: auto;">{$output}</div></div>
 HTML;
 
+    $image_align                         = array(0 => '', 'left' => '', 'right' => '', 'center' => '');
+    $image_align[$config['image_align']] = "selected";
 
-$image_align = array (0 => '', 'left' => '', 'right' => '', 'center' => '');
-$image_align[$config['image_align']] = "selected";
-
-
-$bb_code = <<<HTML
+    $bb_code = <<<HTML
 <script type="text/javascript">
 <!--
 var text_enter_url       = "$lang[bb_url]";
@@ -144,4 +141,3 @@ var fombj    = {$addform};
 HTML;
 
 }
-?>
